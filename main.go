@@ -73,27 +73,56 @@ func main() {
 		})
 	})
 
-	// todo: buat validasi http error jika user id tidak ditemukan
-	// todo: data masih mengambil dari index, bukan dari Id Users
+	// TODO: buat validasi http error jika user id tidak ditemukan
+	// TODO: data masih mengambil dari index, bukan dari Id Users
 	r.GET("users/:id", func(ctx *gin.Context) {
 		id, _ := strconv.Atoi(ctx.Param("id"))
+		user := Users{}
+		notFound := true
+
+		for _, u := range listUsers {
+			if u.Id == id {
+				user = u
+				notFound = false
+				break
+			}
+		}
+
+		if notFound {
+			ctx.JSON(404, Response{
+				Success: false,
+				Message: "User tidak ditemukan",
+			})
+			return
+		}
 
 		ctx.JSON(200, Response{
 			Success: true,
 			Message: fmt.Sprintf("data user ID: %d", id),
-			Results: listUsers[id-1],
+			Results: user,
 		})
+
 	})
 
-	// todo: belum validasi jika user id tidak ditemukan
+	// TODO: belum validasi jika user id tidak ditemukan
 	r.DELETE("/users/:id", func(ctx *gin.Context) {
 		id, _ := strconv.Atoi(ctx.Param("id"))
-		fmt.Println("id input:", id)
+		notFound := true
+
 		for i, u := range listUsers {
 			if u.Id == id {
 				listUsers = slices.Delete(listUsers, i, i+1)
+				notFound = false
 				break
 			}
+		}
+
+		if notFound {
+			ctx.JSON(404, Response{
+				Success: false,
+				Message: "User tidak ditemukan",
+			})
+			return
 		}
 
 		ctx.JSON(200, Response{
@@ -101,6 +130,8 @@ func main() {
 			Message: fmt.Sprintf("Data dengan id %d berhasil dihapus", id),
 		})
 	})
+
+	// TODO: buat handle login
 
 	r.Run("localhost:8888")
 }
