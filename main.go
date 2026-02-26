@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"strconv"
 	"strings"
 
 	"github.com/gin-gonic/gin"
@@ -67,6 +69,16 @@ func main() {
 			Success: true,
 			Message: "List Users:",
 			Results: listUsers,
+		})
+	})
+
+	r.GET("users/:id", func(ctx *gin.Context) {
+		id, _ := strconv.Atoi(ctx.Param("id"))
+
+		ctx.JSON(200, Response{
+			Success: true,
+			Message: fmt.Sprintf("data user ID: %d", id),
+			Results: listUsers[id-1],
 		})
 	})
 
