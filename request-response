@@ -3,7 +3,8 @@ Host: localhost:8888
 Content-Type: application/json
 
 {
-    "email": "koda@mail.com",
+    "fullName": "Koda 2",
+    "email": "koda2@mail.com",
     "password": "1234"
 },
 

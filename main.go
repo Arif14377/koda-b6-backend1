@@ -11,6 +11,7 @@ import (
 
 type Users struct {
 	Id       int    `json:"id"`
+	FullName string `json:"fullName"`
 	Email    string `json:"email"`
 	Password string `json:"password"`
 }
@@ -29,29 +30,48 @@ func main() {
 	r.POST("/register", func(ctx *gin.Context) {
 		data := Users{}
 		err := ctx.ShouldBindJSON(&data)
+		isExist := false
 
 		if err != nil {
 			ctx.JSON(401, Response{
 				Success: false,
-				Message: "You have to login first.",
+				Message: "JSON tidak valid.",
 			})
 			return
 		}
 
-		for x := range listUsers {
-			if strings.Contains(data.Email, listUsers[x].Email) {
-				ctx.JSON(400, Response{
-					Success: false,
-					Message: "Email sudah terdaftar.",
-				})
-				return
+		// validasi email:
+		// 1. email harus ada @
+		// 2. fullname, email dan password tidak boleh kosong
+		// 3. Jika email sudah terdaftar, maka tidak bisa register
+		// 4. Selain itu register berhasil.
+
+		if !strings.Contains(data.Email, "@") {
+			ctx.JSON(400, Response{
+				Success: false,
+				Message: "Email tidak valid.",
+			})
+			return
+		}
+
+		if data.FullName == "" || data.Email == "" || data.Password == "" {
+			ctx.JSON(400, Response{
+				Success: false,
+				Message: "Data tidak boleh kosong.",
+			})
+			return
+		}
+
+		for _, u := range listUsers {
+			if data.Email == u.Email {
+				isExist = true
 			}
 		}
 
-		if data.Email == "" || data.Password == "" {
+		if isExist {
 			ctx.JSON(400, Response{
 				Success: false,
-				Message: "Email dan Password tidak boleh kosong.",
+				Message: "Email sudah terdaftar.",
 			})
 			return
 		}
@@ -62,7 +82,6 @@ func main() {
 			Success: true,
 			Message: "Registrasi berhasil.",
 		})
-
 	})
 
 	r.GET("/users", func(ctx *gin.Context) {
@@ -128,7 +147,6 @@ func main() {
 		})
 	})
 
-	// TODO: buat handle login
 	r.POST("/login", func(ctx *gin.Context) {
 		var data Users
 		err := ctx.ShouldBindJSON(&data)
@@ -178,13 +196,15 @@ func main() {
 				Message: fmt.Sprintf("Welcome %s", data.Email),
 			})
 		} else {
-			ctx.JSON(400, Response{
+			ctx.JSON(401, Response{
 				Success: false,
 				Message: "Email tidak terdaftar. Silahkan register terlebih dahulu.",
 			})
 		}
 
 	})
+
+	// TODO: buat handle update data user
 
 	r.Run("localhost:8888")
 }
