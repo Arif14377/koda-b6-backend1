@@ -1,0 +1,12 @@
+POST /users HTTP/1.1
+Host: localhost:8888
+Content-Type: application/json
+
+{
+    "email": "",
+    "password": "1234"
+}
+
+###
+GET /users HTTP/1.1
+Host: localhost:8888
