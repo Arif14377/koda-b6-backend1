@@ -3,9 +3,9 @@ Host: localhost:8888
 Content-Type: application/json
 
 {
-    "email": "koda@mail.com",
+    "email": "koda5@mail.com",
     "password": "1234"
-}
+},
 
 ###
 GET /users HTTP/1.1
@@ -13,4 +13,8 @@ Host: localhost:8888
 
 ###
 GET /users/2 HTTP/1.1
+Host: localhost:8888
+
+###
+DELETE /users/2 HTTP/1.1
 Host: localhost:8888

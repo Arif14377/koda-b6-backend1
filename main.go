@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"slices"
 	"strconv"
 	"strings"
 
@@ -72,6 +73,8 @@ func main() {
 		})
 	})
 
+	// todo: buat validasi http error jika user id tidak ditemukan
+	// todo: data masih mengambil dari index, bukan dari Id Users
 	r.GET("users/:id", func(ctx *gin.Context) {
 		id, _ := strconv.Atoi(ctx.Param("id"))
 
@@ -79,6 +82,23 @@ func main() {
 			Success: true,
 			Message: fmt.Sprintf("data user ID: %d", id),
 			Results: listUsers[id-1],
+		})
+	})
+
+	// todo: belum validasi jika user id tidak ditemukan
+	r.DELETE("/users/:id", func(ctx *gin.Context) {
+		id, _ := strconv.Atoi(ctx.Param("id"))
+		fmt.Println("id input:", id)
+		for i, u := range listUsers {
+			if u.Id == id {
+				listUsers = slices.Delete(listUsers, i, i+1)
+				break
+			}
+		}
+
+		ctx.JSON(200, Response{
+			Success: true,
+			Message: fmt.Sprintf("Data dengan id %d berhasil dihapus", id),
 		})
 	})
 
