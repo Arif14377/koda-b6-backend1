@@ -116,7 +116,9 @@ func DeleteProduct(c *gin.Context) {
 	})
 }
 
+// update product
 func UpdateProduct(c *gin.Context) {
+	id, _ := strconv.Atoi(c.Param("id"))
 	data := entity.Products{}
 	err := c.ShouldBindJSON(&data)
 
@@ -146,7 +148,14 @@ func UpdateProduct(c *gin.Context) {
 		return
 	}
 
-	listProducts = append(listProducts, data)
+	for i, p := range listProducts {
+		if p.Id == id {
+			listProducts[i] = data
+			listProducts[i].Id = id
+			break
+		}
+	}
+
 	c.JSON(200, entity.Response{
 		Success: true,
 		Message: "Data berhasil diupdate.",

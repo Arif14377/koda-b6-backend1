@@ -1,0 +1,39 @@
+# Get all products
+GET /products HTTP/1.1
+Host: localhost:8888
+
+###
+# Get details product
+GET /products/1 HTTP/1.1
+Host: localhost:8888
+
+###
+# Add product
+POST /products HTTP/1.1
+Host: localhost:8888
+Content-Type: application/json
+
+{
+    "name": "Cappucino",
+    "description": "Ini adalah contoh description product yang akan dituliskan sebagai gambaran detail dari suatu product.",
+    "qty": 20,
+    "price": 27000
+}
+
+####
+# Delete product
+DELETE /products/0 HTTP/1.1
+Host: localhost:8888
+
+###
+# Update product
+PUT /products/2 HTTP/1.1
+Host: localhost:8888
+Content-Type: application/json
+
+{
+    "name": "Capcin Update",
+    "description": "Ini adalah contoh description product yang akan dituliskan sebagai gambaran detail dari suatu product.",
+    "qty": 50,
+    "price": 32000
+}

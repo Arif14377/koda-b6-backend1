@@ -33,7 +33,7 @@ func main() {
 	r.POST("/products", handler.AddProduct)
 	// delete product
 	r.DELETE("/products/:id", handler.DeleteProduct)
-
+	r.PUT("/products/:id", handler.UpdateProduct)
 	if err := r.Run("localhost:8888"); err != nil {
 		log.Fatalf("failed to run: %v", err)
 	}
