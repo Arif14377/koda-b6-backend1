@@ -17,7 +17,7 @@ type ProductVariant struct {
 type ProductSize struct {
 	Id       int    `json:"id"`
 	Name     string `json:"name"`
-	AddPrice int    `json:addPrice`
+	AddPrice int    `json:"addPrice"`
 }
 
 type ProductImage struct {
