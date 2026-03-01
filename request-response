@@ -3,8 +3,8 @@ Host: localhost:8888
 Content-Type: application/json
 
 {
-    "fullName": "Koda 2",
-    "email": "koda2@mail.com",
+    "fullName": "Koda",
+    "email": "koda@mail.com",
     "password": "1234"
 },
 
@@ -27,5 +27,16 @@ Content-Type: application/json
 
 {
     "email": "koda@mail.com",
+    "password": "1234"
+}
+
+###
+PUT /profile HTTP/1.1
+Host: localhost:8888
+Content-Type: application/json
+
+{
+    "fullName": "Kodacademy",
+    "email": "kodatech@gmail.com",
     "password": "1234"
 }
