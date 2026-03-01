@@ -25,6 +25,14 @@ func main() {
 	r.PUT("/profile", handler.UpdateUser)
 
 	// PRODUCT
+	// get all products
+	r.GET("/products", handler.GetProducts)
+	// get product details
+	r.GET("/products/:id", handler.ProductDetails)
+	// add product
+	r.POST("/products", handler.AddProduct)
+	// delete product
+	r.DELETE("/products/:id", handler.DeleteProduct)
 
 	if err := r.Run("localhost:8888"); err != nil {
 		log.Fatalf("failed to run: %v", err)
