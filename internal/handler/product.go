@@ -16,13 +16,10 @@ var listProducts []entity.Products
 //
 // @Summary      Show an all products available
 // @Description  get list all products
-// @Tags         products
+// @Tags         Get All Products
 // @Accept       json
 // @Produce      json
 // @Success      200  {object}  entity.Response
-// @Failure      400  {object}  entity.Response
-// @Failure      404  {object}  entity.Response
-// @Failure      500  {object}  entity.Response
 // @Router       /products [get]
 func GetProducts(c *gin.Context) {
 	c.JSON(200, entity.Response{
@@ -36,7 +33,7 @@ func GetProducts(c *gin.Context) {
 //
 // @Summary      Show details product
 // @Description  Get details product with param id
-// @Tags         details-product
+// @Tags         Cek Detail Product
 // @Accept       json
 // @Produce      json
 // @Param		 id path		int	true		"Product ID"
@@ -80,17 +77,13 @@ func ProductDetails(c *gin.Context) {
 // @Tags         add-products
 // @Accept       json
 // @Produce      json
-// @Param		 name 			body		string	true		"Name"
-// @Param		 description	body		string	true		"Description"
-// @Param		 qty	 		body		int		true		"Quantity"
-// @Param		 price	 		body		int		true		"Price"
+// @Param		 request		body		entity.RequestProducts		true		"Add Product"
 // @Success      200  {object}  entity.Response
 // @Failure      400  {object}  entity.Response
-// @Failure      404  {object}  entity.Response
-// @Failure      500  {object}  entity.Response
+// @Failure      401  {object}  entity.Response
 // @Router       /products/ [post]
 func AddProduct(c *gin.Context) {
-	data := entity.Products{}
+	data := entity.RequestProducts{}
 	err := c.ShouldBindJSON(&data)
 
 	if err != nil {
@@ -119,8 +112,11 @@ func AddProduct(c *gin.Context) {
 		return
 	}
 
-	data.Id = len(listProducts) + 1
-	listProducts = append(listProducts, data)
+	id := len(listProducts) + 1
+
+	finalData := entity.Products{Id: id, Name: data.Name, Description: data.Description, Qty: data.Qty, Price: data.Price}
+
+	listProducts = append(listProducts, finalData)
 	c.JSON(200, entity.Response{
 		Success: true,
 		Message: "Produk berhasil ditambahkan.",
@@ -174,6 +170,7 @@ func DeleteProduct(c *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Param 		 id path		int	true "Product ID"
+// @Param		 request		body		entity.RequestProducts		true		"Edit Product"
 // @Success      200  {object}  entity.Response
 // @Failure      400  {object}  entity.Response
 // @Failure      404  {object}  entity.Response
@@ -181,7 +178,7 @@ func DeleteProduct(c *gin.Context) {
 // @Router       /products/{id} [put]
 func UpdateProduct(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
-	data := entity.Products{}
+	data := entity.RequestProducts{}
 	err := c.ShouldBindJSON(&data)
 
 	if err != nil {
@@ -212,8 +209,12 @@ func UpdateProduct(c *gin.Context) {
 
 	for i, p := range listProducts {
 		if p.Id == id {
-			listProducts[i] = data
-			listProducts[i].Id = id
+			listProducts[i] = entity.Products{
+				Name:        data.Name,
+				Description: data.Description,
+				Qty:         data.Qty,
+				Price:       data.Price,
+			}
 			break
 		}
 	}

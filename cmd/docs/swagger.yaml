@@ -2,6 +2,22 @@ basePath: /
 consumes:
 - application/json
 definitions:
+  entity.RequestProducts:
+    properties:
+      description:
+        example: Bakwan panas berlimpah sayur dengan kenikmatan gigitan cabe rawit
+          pedas
+        type: string
+      name:
+        example: Bakwan
+        type: string
+      price:
+        example: 3000
+        type: integer
+      qty:
+        example: 100
+        type: integer
+    type: object
   entity.Response:
     properties:
       message:
@@ -29,51 +45,21 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/entity.Response'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/entity.Response'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/entity.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/entity.Response'
       summary: Show an all products available
       tags:
-      - products
+      - Get All Products
   /products/:
     post:
       consumes:
       - application/json
       description: Add new product into slice of struct products
       parameters:
-      - description: Name
+      - description: Add Product
         in: body
-        name: name
+        name: request
         required: true
         schema:
-          type: string
-      - description: Description
-        in: body
-        name: description
-        required: true
-        schema:
-          type: string
-      - description: Quantity
-        in: body
-        name: qty
-        required: true
-        schema:
-          type: integer
-      - description: Price
-        in: body
-        name: price
-        required: true
-        schema:
-          type: integer
+          $ref: '#/definitions/entity.RequestProducts'
       produces:
       - application/json
       responses:
@@ -85,12 +71,8 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/entity.Response'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/entity.Response'
-        "500":
-          description: Internal Server Error
+        "401":
+          description: Unauthorized
           schema:
             $ref: '#/definitions/entity.Response'
       summary: Add new product
@@ -128,7 +110,7 @@ paths:
             $ref: '#/definitions/entity.Response'
       summary: Show details product
       tags:
-      - details-product
+      - Cek Detail Product
     put:
       consumes:
       - application/json
@@ -139,6 +121,12 @@ paths:
         name: id
         required: true
         type: integer
+      - description: Edit Product
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/entity.RequestProducts'
       produces:
       - application/json
       responses:

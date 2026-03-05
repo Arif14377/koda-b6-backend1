@@ -8,6 +8,13 @@ type Products struct {
 	Price       int    `json:"price"`
 }
 
+type RequestProducts struct {
+	Name        string `json:"name" example:"Bakwan"`
+	Description string `json:"description" example:"Bakwan panas berlimpah sayur dengan kenikmatan gigitan cabe rawit pedas"`
+	Qty         int    `json:"qty" example:"100"`
+	Price       int    `json:"price" example:"3000"`
+}
+
 type ProductVariant struct {
 	Id       int    `json:"id"`
 	Name     string `json:"name"`

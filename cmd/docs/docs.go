@@ -31,30 +31,12 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "products"
+                    "Get All Products"
                 ],
                 "summary": "Show an all products available",
                 "responses": {
                     "200": {
                         "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/entity.Response"
-                        }
-                    },
-                    "400": {
-                        "description": "Bad Request",
-                        "schema": {
-                            "$ref": "#/definitions/entity.Response"
-                        }
-                    },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/entity.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
                         "schema": {
                             "$ref": "#/definitions/entity.Response"
                         }
@@ -77,39 +59,12 @@ const docTemplate = `{
                 "summary": "Add new product",
                 "parameters": [
                     {
-                        "description": "Name",
-                        "name": "name",
+                        "description": "Add Product",
+                        "name": "request",
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "Description",
-                        "name": "description",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "string"
-                        }
-                    },
-                    {
-                        "description": "Quantity",
-                        "name": "qty",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    },
-                    {
-                        "description": "Price",
-                        "name": "price",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
+                            "$ref": "#/definitions/entity.RequestProducts"
                         }
                     }
                 ],
@@ -126,14 +81,8 @@ const docTemplate = `{
                             "$ref": "#/definitions/entity.Response"
                         }
                     },
-                    "404": {
-                        "description": "Not Found",
-                        "schema": {
-                            "$ref": "#/definitions/entity.Response"
-                        }
-                    },
-                    "500": {
-                        "description": "Internal Server Error",
+                    "401": {
+                        "description": "Unauthorized",
                         "schema": {
                             "$ref": "#/definitions/entity.Response"
                         }
@@ -151,7 +100,7 @@ const docTemplate = `{
                     "application/json"
                 ],
                 "tags": [
-                    "details-product"
+                    "Cek Detail Product"
                 ],
                 "summary": "Show details product",
                 "parameters": [
@@ -209,6 +158,15 @@ const docTemplate = `{
                         "name": "id",
                         "in": "path",
                         "required": true
+                    },
+                    {
+                        "description": "Edit Product",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/entity.RequestProducts"
+                        }
                     }
                 ],
                 "responses": {
@@ -559,6 +517,27 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "entity.RequestProducts": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string",
+                    "example": "Bakwan panas berlimpah sayur dengan kenikmatan gigitan cabe rawit pedas"
+                },
+                "name": {
+                    "type": "string",
+                    "example": "Bakwan"
+                },
+                "price": {
+                    "type": "integer",
+                    "example": 3000
+                },
+                "qty": {
+                    "type": "integer",
+                    "example": 100
+                }
+            }
+        },
         "entity.Response": {
             "type": "object",
             "properties": {

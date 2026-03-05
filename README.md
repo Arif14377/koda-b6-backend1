@@ -15,8 +15,9 @@ minitask backend 1, membuat rest api dengan data product dan user hardcode di re
 
 ## Update Task 3
 - Implementasi swagger
+https://github.com/swaggo/swag
 
-Cara menjalankan swagger (current dir: /cmd$):
+### Cara menjalankan swagger (current dir: /cmd$):
 1. Genereate comment swaggo
 ```bash
 swag init -g main.go -d .,../internal -o docs --parseInternal
@@ -26,6 +27,28 @@ swag init -g main.go -d .,../internal -o docs --parseInternal
 go run main.go
 ```
 
+### Masalah swag terminal (suka ngilang)
+1. Pastikan binary sudah terinstall
+```bash
+ls $(go env GOPATH)/bin | grep swag
+```
+2. Cek gopath & gobin
+```bash
+go env GOPATH
+go env GOBIN
+```
+3. Tambahkan ke path
+```bash
+export PATH=$PATH:$(go env GOPATH)/bin
+```
+4. Reload
+```bash
+source ~/.bashrc
+```
+5. Cek swag
+```bash
+swag --version
+```
 
 ## TODO
 - Swagger masih belum tergroup
