@@ -15,3 +15,19 @@ minitask backend 1, membuat rest api dengan data product dan user hardcode di re
 
 ## Update Task 3
 - Implementasi swagger
+
+Cara menjalankan swagger (current dir: /cmd$):
+1. Genereate comment swaggo
+```bash
+swag init -g main.go -d .,../internal -o docs --parseInternal
+```
+2. Jalankan project
+```bash
+go run main.go
+```
+
+
+## TODO
+- Swagger masih belum tergroup
+- request kirim body json belum berhasil
+- Password belum dihash
