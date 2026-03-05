@@ -13,6 +13,17 @@ import (
 var listProducts []entity.Products
 
 // get all products
+//
+// @Summary      Show an all products available
+// @Description  get list all products
+// @Tags         products
+// @Accept       json
+// @Produce      json
+// @Success      200  {object}  entity.Response
+// @Failure      400  {object}  entity.Response
+// @Failure      404  {object}  entity.Response
+// @Failure      500  {object}  entity.Response
+// @Router       /products [get]
 func GetProducts(c *gin.Context) {
 	c.JSON(200, entity.Response{
 		Success: true,
@@ -22,6 +33,18 @@ func GetProducts(c *gin.Context) {
 }
 
 // get product details
+//
+// @Summary      Show details product
+// @Description  Get details product with param id
+// @Tags         details-product
+// @Accept       json
+// @Produce      json
+// @Param		 id path		int	true		"Product ID"
+// @Success      200  {object}  entity.Response
+// @Failure      400  {object}  entity.Response
+// @Failure      404  {object}  entity.Response
+// @Failure      500  {object}  entity.Response
+// @Router       /products/{id} [get]
 func ProductDetails(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	product := entity.Products{}
@@ -51,6 +74,21 @@ func ProductDetails(c *gin.Context) {
 }
 
 // add product
+//
+// @Summary      Add new product
+// @Description  Add new product into slice of struct products
+// @Tags         add-products
+// @Accept       json
+// @Produce      json
+// @Param		 name 			body		string	true		"Name"
+// @Param		 description	body		string	true		"Description"
+// @Param		 qty	 		body		int		true		"Quantity"
+// @Param		 price	 		body		int		true		"Price"
+// @Success      200  {object}  entity.Response
+// @Failure      400  {object}  entity.Response
+// @Failure      404  {object}  entity.Response
+// @Failure      500  {object}  entity.Response
+// @Router       /products/ [post]
 func AddProduct(c *gin.Context) {
 	data := entity.Products{}
 	err := c.ShouldBindJSON(&data)
@@ -90,6 +128,18 @@ func AddProduct(c *gin.Context) {
 }
 
 // delete product
+//
+// @Summary      delete a product
+// @Description  delete data product with id param
+// @Tags         delete-products
+// @Accept       json
+// @Produce      json
+// @Param		 id path		int	true "Product ID"
+// @Success      200  {object}  entity.Response
+// @Failure      400  {object}  entity.Response
+// @Failure      404  {object}  entity.Response
+// @Failure      500  {object}  entity.Response
+// @Router       /products/{id} [put]
 func DeleteProduct(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	isExist := false
@@ -117,6 +167,18 @@ func DeleteProduct(c *gin.Context) {
 }
 
 // update product
+//
+// @Summary      Edit a product
+// @Description  edit data product with id param
+// @Tags         edit-products
+// @Accept       json
+// @Produce      json
+// @Param 		 id path		int	true "Product ID"
+// @Success      200  {object}  entity.Response
+// @Failure      400  {object}  entity.Response
+// @Failure      404  {object}  entity.Response
+// @Failure      500  {object}  entity.Response
+// @Router       /products/{id} [put]
 func UpdateProduct(c *gin.Context) {
 	id, _ := strconv.Atoi(c.Param("id"))
 	data := entity.Products{}

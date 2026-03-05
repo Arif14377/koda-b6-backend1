@@ -1,0 +1,376 @@
+basePath: /
+consumes:
+- application/json
+definitions:
+  entity.Response:
+    properties:
+      message:
+        type: string
+      results: {}
+      success:
+        type: boolean
+    type: object
+host: localhost:8888
+info:
+  contact: {}
+  description: testing implementasi swagger
+  title: Testing Swagger API
+  version: 1.0.0
+paths:
+  /products:
+    get:
+      consumes:
+      - application/json
+      description: get list all products
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entity.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/entity.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/entity.Response'
+      summary: Show an all products available
+      tags:
+      - products
+  /products/:
+    post:
+      consumes:
+      - application/json
+      description: Add new product into slice of struct products
+      parameters:
+      - description: Name
+        in: body
+        name: name
+        required: true
+        schema:
+          type: string
+      - description: Description
+        in: body
+        name: description
+        required: true
+        schema:
+          type: string
+      - description: Quantity
+        in: body
+        name: qty
+        required: true
+        schema:
+          type: integer
+      - description: Price
+        in: body
+        name: price
+        required: true
+        schema:
+          type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entity.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/entity.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/entity.Response'
+      summary: Add new product
+      tags:
+      - add-products
+  /products/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get details product with param id
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entity.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/entity.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/entity.Response'
+      summary: Show details product
+      tags:
+      - details-product
+    put:
+      consumes:
+      - application/json
+      description: edit data product with id param
+      parameters:
+      - description: Product ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entity.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/entity.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/entity.Response'
+      summary: Edit a product
+      tags:
+      - edit-products
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: Show all user with struct list
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entity.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/entity.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/entity.Response'
+      summary: get list all user
+      tags:
+      - all-user
+  /users/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete user with param id
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entity.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/entity.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/entity.Response'
+      summary: Delete user
+      tags:
+      - delete-user
+    get:
+      consumes:
+      - application/json
+      description: Show details user
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entity.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/entity.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/entity.Response'
+      summary: get the details user
+      tags:
+      - details-user
+    put:
+      consumes:
+      - application/json
+      description: Update user with param id
+      parameters:
+      - description: User ID
+        in: path
+        name: id
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entity.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/entity.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/entity.Response'
+      summary: Update user
+      tags:
+      - Update-user
+  /users/login:
+    post:
+      consumes:
+      - application/json
+      description: Login with email and password
+      parameters:
+      - description: Email
+        in: body
+        name: email
+        required: true
+        schema:
+          type: string
+      - description: Password
+        in: body
+        name: password
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entity.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/entity.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/entity.Response'
+      summary: login
+      tags:
+      - login-user
+  /users/register:
+    post:
+      consumes:
+      - application/json
+      description: Register new user
+      parameters:
+      - description: Name
+        in: body
+        name: name
+        required: true
+        schema:
+          type: string
+      - description: Email
+        in: body
+        name: email
+        required: true
+        schema:
+          type: string
+      - description: Password
+        in: body
+        name: password
+        required: true
+        schema:
+          type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/entity.Response'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/entity.Response'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/entity.Response'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/entity.Response'
+      summary: Create new user
+      tags:
+      - create-user
+produces:
+- application/json
+swagger: "2.0"
