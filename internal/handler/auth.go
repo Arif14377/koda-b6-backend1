@@ -19,16 +19,13 @@ var listUsers []entity.Users
 // @Tags         create-user
 // @Accept       json
 // @Produce      json
-// @Param		 name body		string	true		"Name"
-// @Param		 email body		string	true		"Email"
-// @Param		 password body	string	true		"Password"
+// @Param		 request body entity.RequestUserRegister true "Register User"
 // @Success      200  {object}  entity.Response
 // @Failure      400  {object}  entity.Response
-// @Failure      404  {object}  entity.Response
-// @Failure      500  {object}  entity.Response
+// @Failure      401  {object}  entity.Response
 // @Router       /users/register [post]
 func Register(ctx *gin.Context) {
-	data := entity.Users{}
+	data := entity.RequestUserRegister{}
 	err := ctx.ShouldBindJSON(&data)
 	isExist := false
 
@@ -76,8 +73,14 @@ func Register(ctx *gin.Context) {
 		return
 	}
 
-	data.Id = len(listUsers) + 1
-	listUsers = append(listUsers, data)
+	id := len(listUsers) + 1
+	finalData := entity.Users{
+		Id:       id,
+		FullName: data.FullName,
+		Email:    data.Email,
+		Password: data.Password,
+	}
+	listUsers = append(listUsers, finalData)
 	ctx.JSON(200, entity.Response{
 		Success: true,
 		Message: "Registrasi berhasil.",
@@ -91,15 +94,13 @@ func Register(ctx *gin.Context) {
 // @Tags         login-user
 // @Accept       json
 // @Produce      json
-// @Param		 email body		string	true		"Email"
-// @Param		 password body	string	true		"Password"
+// @Param		 request body entity.RequestUserLogin true "Login User"
 // @Success      200  {object}  entity.Response
 // @Failure      400  {object}  entity.Response
-// @Failure      404  {object}  entity.Response
-// @Failure      500  {object}  entity.Response
+// @Failure      401  {object}  entity.Response
 // @Router       /users/login [post]
 func Login(ctx *gin.Context) {
-	var data entity.Users
+	var data entity.RequestUserLogin
 	err := ctx.ShouldBindJSON(&data)
 	login := false
 
@@ -162,9 +163,6 @@ func Login(ctx *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Success      200  {object}  entity.Response
-// @Failure      400  {object}  entity.Response
-// @Failure      404  {object}  entity.Response
-// @Failure      500  {object}  entity.Response
 // @Router       /users [get]
 func GetUsers(ctx *gin.Context) {
 	ctx.JSON(200, entity.Response{
@@ -183,9 +181,7 @@ func GetUsers(ctx *gin.Context) {
 // @Produce      json
 // @Param		 id path		int	true		"User ID"
 // @Success      200  {object}  entity.Response
-// @Failure      400  {object}  entity.Response
 // @Failure      404  {object}  entity.Response
-// @Failure      500  {object}  entity.Response
 // @Router       /users/{id} [get]
 func UserDetails(ctx *gin.Context) {
 	id, _ := strconv.Atoi(ctx.Param("id"))
@@ -224,9 +220,7 @@ func UserDetails(ctx *gin.Context) {
 // @Produce      json
 // @Param		 id path		int	true		"User ID"
 // @Success      200  {object}  entity.Response
-// @Failure      400  {object}  entity.Response
 // @Failure      404  {object}  entity.Response
-// @Failure      500  {object}  entity.Response
 // @Router       /users/{id} [delete]
 func DeleteUser(ctx *gin.Context) {
 	id, _ := strconv.Atoi(ctx.Param("id"))
@@ -262,13 +256,12 @@ func DeleteUser(ctx *gin.Context) {
 // @Accept       json
 // @Produce      json
 // @Param		 id path		int	true		"User ID"
+// @Param		 request body entity.RequestUserEdit true "Edit User"
 // @Success      200  {object}  entity.Response
 // @Failure      400  {object}  entity.Response
-// @Failure      404  {object}  entity.Response
-// @Failure      500  {object}  entity.Response
 // @Router       /users/{id} [put]
 func UpdateUser(ctx *gin.Context) {
-	data := entity.Users{}
+	data := entity.RequestUserEdit{}
 	err := ctx.ShouldBindJSON(&data)
 	// Validasi update data:
 	// 1. Email yang sudah terdaftar tidak bisa dipakai
@@ -290,7 +283,16 @@ func UpdateUser(ctx *gin.Context) {
 		}
 	}
 
-	listUsers = append(listUsers, data)
+	finalData := entity.Users{
+		FullName: data.FullName,
+		Email:    data.Email,
+		Password: data.Password,
+		Phone:    data.Phone,
+		Address:  data.Address,
+		Photo:    data.Photo,
+	}
+
+	listUsers = append(listUsers, finalData)
 	ctx.JSON(200, entity.Response{
 		Success: true,
 		Message: "Data berhasil diperbarui.",

@@ -16,3 +16,23 @@ type Users struct {
 	Updated_At time.Time `json:"updated_at"`
 	Updated_By *string   `json:"updated_by"`
 }
+
+type RequestUserRegister struct {
+	FullName string `json:"fullName" example:"John Doe"`
+	Email    string `json:"email" example:"johndoe@mail.com"`
+	Password string `json:"password" example:"Pass1234"`
+}
+
+type RequestUserLogin struct {
+	Email    string `json:"email" example:"abc@mail.com"`
+	Password string `json:"password" example:"password"`
+}
+
+type RequestUserEdit struct {
+	FullName string `json:"fullName" example:"John Doe"`
+	Email    string `json:"email" example:"johndoe@mail.com"`
+	Password string `json:"password" example:"Pass1234"`
+	Phone    string `json:"phone" example:"081234567890"`
+	Address  string `json:"address" example:"Washington DC, United State"`
+	Photo    string `json:"photo" example:"https://images.pexels.com/photos/9775483/pexels-photo-9775483.jpeg"`
+}
