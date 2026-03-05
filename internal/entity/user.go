@@ -36,3 +36,13 @@ type RequestUserEdit struct {
 	Address  string `json:"address" example:"Washington DC, United State"`
 	Photo    string `json:"photo" example:"https://images.pexels.com/photos/9775483/pexels-photo-9775483.jpeg"`
 }
+
+type ResponseUserShow struct {
+	Id       int    `json:"id"`
+	FullName string `json:"fullName"`
+	Email    string `json:"email"`
+	Phone    string `json:"phone"`
+	Address  string `json:"address"`
+	Photo    string `json:"photo"`
+	Role     string `json:"role"`
+}

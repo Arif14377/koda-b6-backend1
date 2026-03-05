@@ -18,6 +18,48 @@ definitions:
         example: 100
         type: integer
     type: object
+  entity.RequestUserEdit:
+    properties:
+      address:
+        example: Washington DC, United State
+        type: string
+      email:
+        example: johndoe@mail.com
+        type: string
+      fullName:
+        example: John Doe
+        type: string
+      password:
+        example: Pass1234
+        type: string
+      phone:
+        example: "081234567890"
+        type: string
+      photo:
+        example: https://images.pexels.com/photos/9775483/pexels-photo-9775483.jpeg
+        type: string
+    type: object
+  entity.RequestUserLogin:
+    properties:
+      email:
+        example: abc@mail.com
+        type: string
+      password:
+        example: password
+        type: string
+    type: object
+  entity.RequestUserRegister:
+    properties:
+      email:
+        example: johndoe@mail.com
+        type: string
+      fullName:
+        example: John Doe
+        type: string
+      password:
+        example: Pass1234
+        type: string
+    type: object
   entity.Response:
     properties:
       message:
@@ -161,18 +203,6 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/entity.Response'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/entity.Response'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/entity.Response'
-        "500":
-          description: Internal Server Error
-          schema:
-            $ref: '#/definitions/entity.Response'
       summary: get list all user
       tags:
       - all-user
@@ -194,16 +224,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/entity.Response'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/entity.Response'
         "404":
           description: Not Found
-          schema:
-            $ref: '#/definitions/entity.Response'
-        "500":
-          description: Internal Server Error
           schema:
             $ref: '#/definitions/entity.Response'
       summary: Delete user
@@ -226,16 +248,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/entity.Response'
-        "400":
-          description: Bad Request
-          schema:
-            $ref: '#/definitions/entity.Response'
         "404":
           description: Not Found
-          schema:
-            $ref: '#/definitions/entity.Response'
-        "500":
-          description: Internal Server Error
           schema:
             $ref: '#/definitions/entity.Response'
       summary: get the details user
@@ -251,6 +265,12 @@ paths:
         name: id
         required: true
         type: integer
+      - description: Edit User
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/entity.RequestUserEdit'
       produces:
       - application/json
       responses:
@@ -260,14 +280,6 @@ paths:
             $ref: '#/definitions/entity.Response'
         "400":
           description: Bad Request
-          schema:
-            $ref: '#/definitions/entity.Response'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/entity.Response'
-        "500":
-          description: Internal Server Error
           schema:
             $ref: '#/definitions/entity.Response'
       summary: Update user
@@ -279,18 +291,12 @@ paths:
       - application/json
       description: Login with email and password
       parameters:
-      - description: Email
+      - description: Login User
         in: body
-        name: email
+        name: request
         required: true
         schema:
-          type: string
-      - description: Password
-        in: body
-        name: password
-        required: true
-        schema:
-          type: string
+          $ref: '#/definitions/entity.RequestUserLogin'
       produces:
       - application/json
       responses:
@@ -302,12 +308,8 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/entity.Response'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/entity.Response'
-        "500":
-          description: Internal Server Error
+        "401":
+          description: Unauthorized
           schema:
             $ref: '#/definitions/entity.Response'
       summary: login
@@ -319,24 +321,12 @@ paths:
       - application/json
       description: Register new user
       parameters:
-      - description: Name
+      - description: Register User
         in: body
-        name: name
+        name: request
         required: true
         schema:
-          type: string
-      - description: Email
-        in: body
-        name: email
-        required: true
-        schema:
-          type: string
-      - description: Password
-        in: body
-        name: password
-        required: true
-        schema:
-          type: string
+          $ref: '#/definitions/entity.RequestUserRegister'
       produces:
       - application/json
       responses:
@@ -348,12 +338,8 @@ paths:
           description: Bad Request
           schema:
             $ref: '#/definitions/entity.Response'
-        "404":
-          description: Not Found
-          schema:
-            $ref: '#/definitions/entity.Response'
-        "500":
-          description: Internal Server Error
+        "401":
+          description: Unauthorized
           schema:
             $ref: '#/definitions/entity.Response'
       summary: Create new user

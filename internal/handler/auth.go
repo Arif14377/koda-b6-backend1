@@ -165,10 +165,26 @@ func Login(ctx *gin.Context) {
 // @Success      200  {object}  entity.Response
 // @Router       /users [get]
 func GetUsers(ctx *gin.Context) {
+	user := entity.ResponseUserShow{}
+	sliceUser := []entity.ResponseUserShow{}
+
+	for _, u := range listUsers {
+		user = entity.ResponseUserShow{
+			Id:       u.Id,
+			FullName: u.FullName,
+			Email:    u.Email,
+			Phone:    u.Phone,
+			Address:  u.Address,
+			Photo:    u.Photo,
+			Role:     "user",
+		}
+		sliceUser = append(sliceUser, user)
+	}
+
 	ctx.JSON(200, entity.Response{
 		Success: true,
 		Message: "List Users:",
-		Results: listUsers,
+		Results: sliceUser,
 	})
 }
 
@@ -185,12 +201,20 @@ func GetUsers(ctx *gin.Context) {
 // @Router       /users/{id} [get]
 func UserDetails(ctx *gin.Context) {
 	id, _ := strconv.Atoi(ctx.Param("id"))
-	user := entity.Users{}
+	user := entity.ResponseUserShow{}
 	notFound := true
 
 	for _, u := range listUsers {
 		if u.Id == id {
-			user = u
+			user = entity.ResponseUserShow{
+				Id:       u.Id,
+				FullName: u.FullName,
+				Email:    u.Email,
+				Phone:    u.Phone,
+				Address:  u.Address,
+				Photo:    u.Photo,
+				Role:     "user",
+			}
 			notFound = false
 			break
 		}
