@@ -52,5 +52,4 @@ swag --version
 
 ## TODO
 - Swagger masih belum tergroup
-- request kirim body json belum berhasil
 - Password belum dihash
